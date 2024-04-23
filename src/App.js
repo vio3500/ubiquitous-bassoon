@@ -4,6 +4,7 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import Login from "./login";
+import CallBoard from "./callBoard";
 
 function App() {
     const router = createBrowserRouter([
@@ -14,6 +15,10 @@ function App() {
         {
             path: "/Login",
             element: <Login />,
+        },
+        {
+            path: "/CallBoard",
+            element: <CallBoard />,
         }
     ]);
     return (
