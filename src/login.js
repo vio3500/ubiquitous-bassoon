@@ -9,6 +9,7 @@ function Login() {
     const navigate = useNavigate();
     const [username, setUsername] = useState(undefined)
     const [password, setPassword] = useState(undefined)
+    //eslint-disable-next-line
     const [loginResponse, setLoginResponse] = useState(undefined)
     const [loginDeny, setLoginDeny] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
