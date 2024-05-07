@@ -1,13 +1,12 @@
 import './callBoard.css';
 import React, {useEffect, useState} from "react";
+import Group from "./group";
 import axios from "axios";
 import useSWR from "swr";
 import {Button, Descriptions, InputNumber, List, Modal, Space, Spin, TabPane, Tabs} from "@douyinfe/semi-ui";
 
 function CallBoard() {
     const [selectedStudents, setSelectedStudents] = useState([]);
-    const [groupSize, setGroupSize] = useState(2);
-    const [groups, setGroups] = useState([]);
     const [visible, setVisible] = useState(false);
     const showDialog = () => {
         setVisible(true);
@@ -35,43 +34,9 @@ function CallBoard() {
         paddingLeft: '20px',
         margin: '8px 2px',
     };
-    const getShuffledArr = arr => {
-        const newArr = arr.slice();
-        for (let i = newArr.length - 1; i > 0; i--) {
-            const rand = Math.floor(Math.random() * (i + 1));
-            [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
-        }
-        return newArr;
-    };
     const callRoll = () => {
 
     }
-    const group = () => {
-        const students_t = getShuffledArr(students);
-        const totalPeople = students_t.length;
-        let groupCount = Math.floor(totalPeople / groupSize);
-        let remainder = totalPeople % groupSize;
-
-        if (remainder === 1) {
-            remainder++;
-            groupCount--;
-        }
-
-        const groups = [];
-
-        let startIndex = 0;
-        for (let i = 0; i < groupCount; i++) {
-            const group = students_t.slice(startIndex, startIndex + groupSize);
-            groups.push(group);
-            startIndex += groupSize;
-        }
-
-        if (remainder > 0) {
-            const lastGroup = students_t.slice(startIndex);
-            groups.push(lastGroup);
-        }
-        setGroups(groups);
-    };
     return (
         <div>
             <Tabs type="button">
@@ -117,17 +82,7 @@ function CallBoard() {
                     </Modal>
                 </TabPane>
                 <TabPane tab="分组" itemKey="2">
-                    <InputNumber innerButtons min={2} max={10} defaultValue={2} onChange={x => setGroupSize(x)}/>
-                    <Button theme='solid' size='large' onClick={() => group()}>分组</Button>
-                    <Space>
-                        {groups.map(group => (
-                            <Space vertical>
-                                {group.map(student => (
-                                    <div>{student.name}</div>
-                                ))}
-                            </Space>
-                        ))}
-                    </Space>
+                    <Group />
                 </TabPane>
             </Tabs>
         </div>
