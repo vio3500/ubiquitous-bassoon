@@ -2,22 +2,52 @@ import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {Button, Descriptions, List, Modal, Spin} from "@douyinfe/semi-ui";
 import axios from "axios";
+import {updateStudent} from './requests'
 
 function CallRoll() {
-    const [selectedStudents, setSelectedStudents] = useState([]);
-    useEffect(() => {
-        if (students && selectedStudents.length === students.length) {
-            setSelectedStudents([])
-        }
-    }, [selectedStudents])
+    const [currentStudent, setCurrentStudent] = useState(false);
     const [visible, setVisible] = useState(false);
-    const {data: students} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
+    const {data: students, mutate} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
+    useEffect(() => {
+        if (students) {
+            const unselectStudents = students.filter(student => dataItem => !dataItem.selected);
+            if (unselectStudents.length === 0) {
+                const updatePromises = students.map(student => updateStudent({
+                    id: student.id,
+                    data: {new: false}
+                })
+                )
+                Promise.all(updatePromises).then(() => {
+                    mutate();
+                })
+            }
+        }
+    }, [students])
     const showDialog = () => {
+        const unselectStudents = students.filter(dataItem => ! dataItem.selected)
+        let randomIndex = Math.floor(Math.random() * unselectStudents.length);
+        let randomPerson = unselectStudents[randomIndex];
+        setCurrentStudent(randomPerson)
         setVisible(true);
     };
-    const handleOk = () => {
+    const handleOk = async () => {
         setVisible(false);
+        await updateStudent({
+            id: currentStudent.id,
+            data: {points: currentStudent.points + 1, new: true},
+        }).then(() => mutate());
+        setCurrentStudent({})
     }
+
+    const handleCancel = async () => {
+        setVisible(false);
+        await updateStudent({
+            id: currentStudent.id,
+            data: {new: false}
+        }).then(() => mutate());
+        setCurrentStudent({});
+    }
+
     const style = {
         border: '1px solid var(--semi-color-border)',
         backgroundColor: 'var(--semi-color-bg-2)',
@@ -25,9 +55,7 @@ function CallRoll() {
         paddingLeft: '20px',
         margin: '8px 2px',
     };
-    const callRoll = () => {
 
-    }
     return(
         <>
             <List
@@ -62,12 +90,13 @@ function CallRoll() {
             />
             <Button size='large' theme='solid' style={{marginRight: 8}} onClick={showDialog}>随机抽取</Button>
             <Modal
-                title="基本对话框"
+                title="结果"
                 visible={visible}
                 onOk={handleOk}
+                onCancel={handleCancel}
                 closeOnEsc={true}
             >
-                <h1>Warning</h1>
+                <h1>{currentStudent.name}</h1>
             </Modal>
         </>
     )
