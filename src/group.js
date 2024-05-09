@@ -1,20 +1,21 @@
 import React, {useState} from "react";
-import fetcher from "./callBoard"
-import {Button, InputNumber, Space} from "@douyinfe/semi-ui";
+import {Button, InputNumber, Space, Spin} from "@douyinfe/semi-ui";
 import useSWR from "swr";
+import axios from "axios";
+
+const getShuffledArr = arr => {
+    const newArr = arr.slice();
+    for (let i = newArr.length - 1; i > 0; i--) {
+        const rand = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+    }
+    return newArr;
+};
 
 function Group() {
+    const {data: students} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
     const [groupSize, setGroupSize] = useState(2);
     const [groups, setGroups] = useState([]);
-    const {data: students, error, loading} = useSWR('http://localhost:4000/students', fetcher)
-    const getShuffledArr = arr => {
-        const newArr = arr.slice();
-        for (let i = newArr.length - 1; i > 0; i--) {
-            const rand = Math.floor(Math.random() * (i + 1));
-            [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
-        }
-        return newArr;
-    };
     const grouping = () => {
         const students_t = getShuffledArr(students);
         const totalPeople = students_t.length;
