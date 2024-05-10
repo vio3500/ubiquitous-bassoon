@@ -9,11 +9,14 @@ import useSWR from "swr";
 function CallBoard() {
     const {loading, error} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
     if (loading) {
+        console.log(loading)
         return <Spin></Spin>
     }
     if (error) {
+        console.log(error)
         return <div>Error: {error.message}</div>;
     }
+    else {
     return (
         <div>
             <Tabs type="button">
@@ -26,6 +29,7 @@ function CallBoard() {
             </Tabs>
         </div>
     )
+    }
 }
 
 export default CallBoard;
