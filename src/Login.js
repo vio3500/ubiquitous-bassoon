@@ -1,4 +1,3 @@
-import './login.css';
 import React, {useEffect, useState} from 'react';
 import {Button, Input, Typography} from '@douyinfe/semi-ui';
 import {useNavigate} from 'react-router-dom';
@@ -38,7 +37,7 @@ function Login() {
         login.then((response) => {
             setLoginResponse(response);
             setErrorMessage('')
-            navigate("/CallBoard");
+            navigate("/Courses");
         })
             .catch((error) => {
                 setLoginResponse(error);

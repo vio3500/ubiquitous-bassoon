@@ -1,25 +1,27 @@
-import './App.css';
+import "./App.css"
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Login from "./login";
-import CallBoard from "./callBoard";
+import Login from "./Login";
+import Operations from "./Operations";
+import CourseOverview from './CourseOverview';
+import CourseDetails from './CourseDetails';
 
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <div>Hello world!</div>,
+            element: <Login />
         },
         {
-            path: "/Login",
-            element: <Login />,
+            path: "/courses",
+            element: <CourseOverview/>
         },
         {
-            path: "/CallBoard",
-            element: <CallBoard />,
-        }
+            path: "/courses/:course_id",
+            element: <CourseDetails/>
+        },
     ]);
     return (
         <RouterProvider router={router} />

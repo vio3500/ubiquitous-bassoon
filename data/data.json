@@ -16,9 +16,9 @@
     },
     {
       "name": "赵胤轩",
-      "points": 0,
+      "points": 1,
       "total_points": 0,
-      "new": false,
+      "new": true,
       "id": "0f70"
     },
     {
@@ -30,9 +30,9 @@
     },
     {
       "name": "付子豪",
-      "points": 0,
+      "points": 1,
       "total_points": 0,
-      "new": false,
+      "new": true,
       "id": "fdaa"
     },
     {
@@ -44,9 +44,9 @@
     },
     {
       "name": "高涵",
-      "points": 0,
+      "points": 2,
       "total_points": 0,
-      "new": false,
+      "new": true,
       "id": "1e13"
     },
     {
@@ -58,9 +58,9 @@
     },
     {
       "name": "吴廷潇",
-      "points": 0,
+      "points": 2,
       "total_points": 0,
-      "new": false,
+      "new": true,
       "id": "332f"
     }
   ]

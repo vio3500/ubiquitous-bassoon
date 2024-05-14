@@ -1,12 +1,11 @@
-import './callBoard.css';
 import React from "react";
-import Group from "./group";
-import CallRoll from "./callRoll";
+import Group from "./Group";
+import Call from "./Call";
 import axios from "axios";
 import {Spin, TabPane, Tabs} from "@douyinfe/semi-ui";
 import useSWR from "swr";
 
-function CallBoard() {
+function Operations() {
     const {loading, error} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
     if (loading) {
         console.log(loading)
@@ -21,7 +20,7 @@ function CallBoard() {
         <div>
             <Tabs type="button">
                 <TabPane tab="点名" itemKey="1">
-                    <CallRoll />
+                    <Call />
                 </TabPane>
                 <TabPane tab="分组" itemKey="2">
                     <Group />
@@ -32,4 +31,4 @@ function CallBoard() {
     }
 }
 
-export default CallBoard;
+export default Operations;

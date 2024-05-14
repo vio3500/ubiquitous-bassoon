@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {Button, Descriptions, List, Modal, Spin} from "@douyinfe/semi-ui";
 import axios from "axios";
-import {updateStudent} from './requests'
+import {updateStudent} from './Requests'
 
-function CallRoll() {
+function Call() {
     const [currentStudent, setCurrentStudent] = useState(false);
     const [visible, setVisible] = useState(false);
     const {data: students, mutate} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
@@ -102,4 +102,4 @@ function CallRoll() {
     )
 }
 
-export default CallRoll;
+export default Call;
