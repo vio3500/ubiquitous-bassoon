@@ -1,17 +1,62 @@
-import React from 'react'
-import {Typography, Button} from "@douyinfe/semi-ui";
+import React, {useState, useEffect} from 'react'
+import {Typography, Button, Modal, Input} from "@douyinfe/semi-ui";
 import {IconPlusCircle} from '@douyinfe/semi-icons';
-
-// 我的屌没了
+import axios from "axios";
 
 function CourseOverview(){
     const { Title } = Typography;
+    const [courses, setCourses] = useState([]);
+    const [courseCode, setCourseCode] = useState('');
+    const [courseName, setCourseName] = useState('');
+    const [visible, setVisible] = useState(false);
+    useEffect(() => {
+        axios.get('http://localhost:4001/Courses')
+            .then(response => setCourses(response.data))
+            .catch(error => console.log(error));
+    }, []);
+    const showDialog = () => {
+        setVisible(true);
+    };
+    const handleOk = () => {
+        console.log('Ok button clicked');
+        const newCourse = {
+            course_code: courseCode,
+            course_name: courseName
+        };
+        axios.post('http://localhost:4001/courses', newCourse)
+            .then(response => {
+                console.log('Course added successfully');
+                setVisible(false);
+            })
+            .catch(error => console.log(error));
+    };
+    const handleCancel = () => {
+        setVisible(false);
+        console.log('Cancel button clicked');
+    };
+    const handleAfterClose = () => {
+        console.log('After Close callback executed');
+    };
     return(
         <>
             <Title style={{ margin: '8px 0' }} >主页</Title>
-            <Button icon={<IconPlusCircle/>} aria-label="添加课程"/>
-            <Button>测试</Button>
-            <Button>英语语言文学</Button>
+            <Button theme='solid' icon={<IconPlusCircle/>} aria-label="添加课程" onClick={showDialog}>添加课程</Button>
+            <Modal
+                title="添加课程"
+                visible={visible}
+                onOk={handleOk}
+                afterClose={handleAfterClose} //>=1.16.0
+                onCancel={handleCancel}
+                closeOnEsc={true}
+            >
+                <p>输入课程编码</p>
+                <Input placeholder='例如：EXAM0000'></Input>
+                <p>输入课程名称</p>
+                <Input placeholder='例如：AP物理'></Input>
+            </Modal>
+            {courses.map(course => (
+                <Button key={course.id}>{course.course_name}</Button>
+            ))}
         </>
     )
 }
