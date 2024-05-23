@@ -18,7 +18,7 @@ function CourseOverview(){
     const handleOk = () => {
         console.log('Ok button clicked');
         const newCourse = {
-            course_id: courseCode,
+            id: courseCode,
             course_class: courseClass,
             course_name: courseName
         };

@@ -1,10 +1,9 @@
 {
   "Courses": [
     {
-      "course_id": "CHIN0000",
+      "id": "CHIN0000",
       "course_class": "B",
       "course_name": "博雅语文课",
-      "id": "ec6d",
       "students": [
         {
           "name": "张恩淇",
@@ -72,10 +71,9 @@
       ]
     },
     {
-      "course_id": "MATH0000",
+      "id": "MATH0000",
       "course_class": "A",
       "course_name": "基础数学",
-      "id": "1130",
       "students": [
         {
           "name": "张恩淇",
@@ -143,10 +141,9 @@
       ]
     },
     {
-      "course_id": "ENGL0000",
+      "id": "ENGL0000",
       "course_class": "A",
       "course_name": "英语语言文学",
-      "id": "1e47",
       "students": [
         {
           "name": "张恩淇",
@@ -214,10 +211,9 @@
       ]
     },
     {
-      "course_id": "COMP0000",
+      "id": "COMP0000",
       "course_class": "A",
       "course_name": "校企联培 - 前端开发",
-      "id": "e8b7",
       "students": [
         {
           "name": "张恩淇",
@@ -285,10 +281,9 @@
       ]
     },
     {
-      "course_id": "CHEM0000",
+      "id": "CHEM0000",
       "course_class": "B",
       "course_name": "化学入门",
-      "id": "8452",
       "students": [
         {
           "name": "张恩淇",
@@ -356,8 +351,7 @@
       ]
     },
     {
-      "id": "86b7",
-      "course_id": "EXAM1001",
+      "id": "EXAM1001",
       "course_class": "A",
       "course_name": "考试",
       "students": [
