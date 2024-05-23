@@ -7,6 +7,7 @@ import Login from "./Login";
 import Operations from "./Operations";
 import CourseOverview from './CourseOverview';
 import CourseDetails from './CourseDetails';
+import Test from "./test";
 
 function App() {
     const router = createBrowserRouter([
