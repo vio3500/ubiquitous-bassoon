@@ -20,7 +20,7 @@ function CourseOverview(){
             course_class: courseClass,
             course_name: courseName
         };
-        axios.post('http://localhost:4001/Courses', newCourse)
+        axios.post('http://localhost:4000/Courses', newCourse)
             .then(response => {
                 console.log('Course added successfully');
                 setVisible(false);
@@ -35,7 +35,7 @@ function CourseOverview(){
         console.log('After Close callback executed');
     };
     useEffect(() => {
-        axios.get('http://localhost:4001/Courses')
+        axios.get('http://localhost:4000/Courses')
             .then(response => setCourses(response.data))
             .catch(error => console.log(error));
     }, [handleOk]);
