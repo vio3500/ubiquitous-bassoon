@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Typography, Button, Modal, Input} from "@douyinfe/semi-ui";
 import {IconPlusCircle} from '@douyinfe/semi-icons';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function CourseOverview(){
     const { Title } = Typography;
@@ -10,6 +11,7 @@ function CourseOverview(){
     const [courseName, setCourseName] = useState('');
     const [courseClass, setCourseClass] = useState('');
     const [visible, setVisible] = useState(false);
+    const navigate = useNavigate();
     const showDialog = () => {
         setVisible(true);
     };
@@ -39,6 +41,9 @@ function CourseOverview(){
             .then(response => setCourses(response.data))
             .catch(error => console.log(error));
     }, [handleOk]);
+    const handleCourseClick = (courseId) => {
+        navigate(`/courses/${courseId}`);
+    }
     return(
         <>
             <Title style={{ margin: '8px 0' }} >主页</Title>
@@ -65,7 +70,7 @@ function CourseOverview(){
                 }></Input>
             </Modal>
             {courses.map(course => (
-                <Button key={course.id}>{course.course_name}</Button>
+                <Button key={course.id} onClick={() => handleCourseClick(course.id)}>{course.course_name}</Button>
             ))}
         </>
     )
