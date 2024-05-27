@@ -7,7 +7,6 @@ import Login from "./Login";
 import Operations from "./Operations";
 import CourseOverview from './CourseOverview';
 import CourseDetails from './CourseDetails';
-import Test from "./test";
 
 function App() {
     const router = createBrowserRouter([
@@ -23,6 +22,10 @@ function App() {
             path: "/courses/:course_id",
             element: <CourseDetails/>
         },
+        {
+            path: "/courses/:course_id/operations",
+            element: <Operations/>
+        }
     ]);
     return (
         <RouterProvider router={router} />
