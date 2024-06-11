@@ -34,6 +34,11 @@
       "id": "EXAM1001",
       "course_class": "A",
       "course_name": "测试"
+    },
+    {
+      "id": "EXAM0002",
+      "course_class": "B",
+      "course_name": "测试"
     }
   ],
   "students": [
@@ -53,7 +58,7 @@
     },
     {
       "name": "赵胤轩",
-      "points": 2,
+      "points": 3,
       "total_points": 0,
       "new": true,
       "id": "0f70"

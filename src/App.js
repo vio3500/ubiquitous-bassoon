@@ -7,12 +7,17 @@ import Login from "./Login";
 import Operations from "./Operations";
 import CourseOverview from './CourseOverview';
 import CourseDetails from './CourseDetails';
+import Register from "./Register";
 
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
             element: <Login />
+        },
+        {
+            path: "/register",
+            element: <Register/>
         },
         {
             path: "/courses",

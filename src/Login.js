@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Input, Typography} from '@douyinfe/semi-ui';
 import {useNavigate} from 'react-router-dom';
+import axios from "axios";
 
 function Login() {
     const {Title} = Typography;
@@ -27,48 +28,52 @@ function Login() {
         }
     }), [username, password])
     const handleLogin = () => {
-        const login = new Promise((resolve, reject) => {
-            if (Math.random() <= 0.5) {
-                resolve("Login OK")
-            } else {
-                reject("Error: Access Denied. ErrorCode=0000")
+        const loginData = {
+            username: username,
+            password: password
+        }
+        axios.post("http://localhost:5000/teachers/login", loginData, {
+            headers: {
+                "Content-Type": "application/json"
             }
-        })
-        login.then((response) => {
-            setLoginResponse(response);
-            setErrorMessage('')
-            navigate("/Courses");
-        })
-            .catch((error) => {
-                setLoginResponse(error);
-                setErrorMessage('账户或密码错误，请重试！')
-            });
+        }).then(response => {
+            if (response.data.token) {
+                setLoginResponse("Success");
+                console.log(response.data.token)
+                setErrorMessage("")
+                navigate("/Courses")
+            } else {
+                setLoginResponse("Failure");
+                setErrorMessage("账户或密码错误。")
+            }
+        }).catch(error => {
+            setLoginResponse(error.message);
+            setErrorMessage("登录时遇到错误。请稍后再试。");
+        });
     }
-    return (
-        <>
-            <div id={'login'}>
-                <Title>登录</Title>
-                <Input onChange=
-                           {
-                               username => {
-                                   setUsername(username)
+        return (
+            <>
+                    <Title>登录</Title>
+                    <Input onChange=
+                               {
+                                   username => {
+                                       setUsername(username)
+                                   }
                                }
-                           }
-                       placeholder='账号'></Input>
-                <Input mode="password" placeholder='密码' onChange=
-                    {
-                        password => {
-                            setPassword(password)
+                           placeholder='账号'></Input>
+                    <Input mode="password" placeholder='密码' onChange=
+                        {
+                            password => {
+                                setPassword(password)
+                            }
                         }
-                    }
-                ></Input>
-                <Button disabled={loginDeny} size='large' theme='solid' type='secondary'
-                        onClick={handleLogin}>登录</Button>
-                <Error errorInfo={errorMessage}/>
-                <Text>没有账号？<Text link={{href: ''}}>注册</Text></Text>
-            </div>
-        </>
-    )
-}
+                    ></Input>
+                    <Button disabled={loginDeny} size='large' theme='solid' type='secondary'
+                            onClick={handleLogin}>登录</Button>
+                    <Text type='danger'>{errorMessage}</Text>
+                    <Text>没有账号？<Text link={{href: 'http://localhost:3000/register'}}>注册</Text></Text>
+            </>
+        )
+    }
 
-export default Login
+    export default Login

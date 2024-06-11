@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useSWR from "swr";
 import axios from "axios";
@@ -6,6 +6,7 @@ import {Button, Divider, List, Modal, Radio, RadioGroup, SideSheet} from "@douyi
 
 const AttendanceRadio = ({onChange}) => {
     const [value, setValue] = useState(1);
+    
     return (
         <RadioGroup onChange={ (e) => {
             setValue(e.target.value);
