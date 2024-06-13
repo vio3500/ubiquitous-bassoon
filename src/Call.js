@@ -3,11 +3,21 @@ import useSWR from "swr";
 import {Button, Descriptions, List, Modal, Spin} from "@douyinfe/semi-ui";
 import axios from "axios";
 import {updateStudent} from './Requests'
+import {useParams} from "react-router-dom";
 
 function Call() {
     const [currentStudent, setCurrentStudent] = useState(false);
     const [visible, setVisible] = useState(false);
-    const {data: students, mutate} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
+    const { course_id } = useParams();
+    const token = localStorage.getItem('token'); // Fetch Bearer token from local storage
+
+    const fetcher = url => axios.get(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => res.data);
+
+    const {data: students, mutate} = useSWR(`http://localhost:5000/courses/${course_id}/students`, fetcher);
     useEffect(() => {
         if (students) {
             const unselectStudents = students.filter(student => dataItem => !dataItem.selected);
@@ -32,19 +42,11 @@ function Call() {
     };
     const handleOk = async () => {
         setVisible(false);
-        await updateStudent({
-            id: currentStudent.id,
-            data: {points: currentStudent.points + 1, new: true},
-        }).then(() => mutate());
         setCurrentStudent({})
     }
 
     const handleCancel = async () => {
         setVisible(false);
-        await updateStudent({
-            id: currentStudent.id,
-            data: {new: false}
-        }).then(() => mutate());
         setCurrentStudent({});
     }
 
@@ -73,15 +75,6 @@ function Call() {
                     <List.Item style={style}>
                         <div>
                             <h1 style={{color: 'var(--semi-color-text-0)', fontWeight: 1000}}>{item.name}</h1>
-                            <Descriptions
-                                align="center"
-                                size="small"
-                                row
-                                data={[
-                                    {key: '分数', value: item.points},
-                                    {key: '总分', value: item.total_points}
-                                ]}
-                            />
                             <div style={{margin: '12px 0', display: 'flex', justifyContent: 'flex-end'}}>
                             </div>
                         </div>

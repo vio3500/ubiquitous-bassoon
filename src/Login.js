@@ -39,6 +39,7 @@ function Login() {
         }).then(response => {
             if (response.data.token) {
                 setLoginResponse("Success");
+                localStorage.setItem('token', response.data.token);
                 console.log(response.data.token)
                 setErrorMessage("")
                 navigate("/Courses")

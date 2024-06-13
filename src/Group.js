@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Button, InputNumber, Space, Spin} from "@douyinfe/semi-ui";
 import useSWR from "swr";
 import axios from "axios";
+import {useParams} from "react-router-dom";
 
 const getShuffledArr = arr => {
     const newArr = arr.slice();
@@ -13,7 +14,14 @@ const getShuffledArr = arr => {
 };
 
 function Group() {
-    const {data: students} = useSWR('http://localhost:4000/students', url => axios.get(url).then(res => res.data))
+    const token = localStorage.getItem('token'); // Fetch Bearer token from local storage
+    const fetcher = url => axios.get(url, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => res.data);
+    const { course_id } = useParams();
+    const {data: students} = useSWR(`http://localhost:5000/courses/${course_id}/students`, fetcher);
     const [groupSize, setGroupSize] = useState(2);
     const [groups, setGroups] = useState([]);
     const grouping = () => {
